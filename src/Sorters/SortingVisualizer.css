@@ -1,0 +1,14 @@
+.array-container {
+  position: center;
+  margin-top: 2em;
+}
+
+.array-bar {
+  width: 2px;
+  display: inline-block;
+  margin: 0 1px;
+}
+
+.buttons {
+  position: fixed;
+}
