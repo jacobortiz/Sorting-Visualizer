@@ -1,12 +1,13 @@
 import React from 'react'
 import './SortingVisualizer.css'
 import { mergeSortAnimations } from '../SortingVisualizer/Algorithms/MergeSort'
+import { bubbleSortAnimations } from '../SortingVisualizer/Algorithms/BubbleSort'
 
 
-const ANIMATION_SPEED = 5
+const ANIMATION_SPEED = 20
 const PRIMARY_COLOR = 'turquoise'
 const SECONDARY_COLOR = 'red'
-const ARRAY_BARS = 50
+const ARRAY_BARS = 20
 
 export class SortingVisualizer extends React.Component {
     constructor(props) {
@@ -22,11 +23,28 @@ export class SortingVisualizer extends React.Component {
     }
 
     // sorting algorithms
+    bubbleSort() {
+        console.log('doing bubble sort')
+        const animations = bubbleSortAnimations(this.state.array)
+        console.log('in bubbleSort() animations: ', animations)
+        for (let i = 0; i < animations.length; i++) {
+            const array_bars = document.getElementsByClassName('array-bar')
+            console.log(array_bars)
+        }
+
+
+
+    }
+
+
     mergeSort() {
+
         const animations = mergeSortAnimations(this.state.array)
+        console.log('in mergeSort() animations:', animations)
         for (let i = 0; i < animations.length; i++) {
             const array_bars = document.getElementsByClassName('array-bar')
             const is_color_changed = i % 3 !== 2
+            // switches bar colors
             if (is_color_changed) {
                 const [bar_one_index, bar_two_index] = animations[i]
                 const bar_one_style = array_bars[bar_one_index].style
@@ -36,6 +54,7 @@ export class SortingVisualizer extends React.Component {
                     bar_one_style.backgroundColor = color
                     bar_two_style.backgroundColor = color
                 }, i * ANIMATION_SPEED)
+            // switch bar heights
             } else {
                 setTimeout(() => {
                     const [bar_one_index, new_height] = animations[i]
@@ -46,10 +65,6 @@ export class SortingVisualizer extends React.Component {
         }
     }
 
-    bubbleSort() {
-
-    }
-
     resetArray() {
         const array = []
         for(let i = 0; i < ARRAY_BARS; i++) {
@@ -58,14 +73,20 @@ export class SortingVisualizer extends React.Component {
         this.setState({array})
     }
 
+    getArray() {
+        console.log(this.state.array)
+    }
+
     render() {
         const {array} = this.state
 
         return (
             <>
-                <button className='buttons' onClick={() => this.resetArray()}>Generate New Array</button>
-                <button className='buttons' onClick={() => this.mergeSort()}>Merge Sort</button>
-                <button className='buttons' onClick={() => this.bubbleSort()}>Bubble Sort</button>
+                <button onClick={() => this.resetArray()}>Generate New Array</button>
+                <button onClick={() => this.mergeSort()}>Merge Sort</button>
+                <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+                <button onClick={() => this.getArray()}>Get current array</button>
+
 
 
                 <div className="array-container">
